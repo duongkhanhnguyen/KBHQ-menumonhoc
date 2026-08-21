@@ -30,6 +30,104 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Màn hình Menu Welcome - Cảnh biển */
+        #welcomeOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 24, 51, 0.65), rgba(0, 24, 51, 0.75)), 
+                        url('https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #welcomeOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .welcome-card {
+            background: rgba(15, 23, 42, 0.85);
+            padding: 40px 50px;
+            border-radius: 16px;
+            border: 2px solid var(--accent-yellow);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            max-width: 800px;
+            width: 90%;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .welcome-card h1 {
+            font-size: 2.2rem;
+            color: var(--accent-yellow);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .welcome-card h2 {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .welcome-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            color: var(--light-yellow);
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .start-btn:hover {
+            background-color: #0369a1;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Banner Header */
@@ -136,6 +234,11 @@
             border-bottom: 3px solid var(--bright-red);
         }
 
+        .home-tab-btn {
+            background-color: rgba(2, 62, 138, 0.1);
+            color: #023e8a;
+        }
+
         /* Main Workspace Container */
         main {
             flex: 1;
@@ -194,6 +297,23 @@
 </head>
 <body>
 
+    <!-- Màn hình Menu Welcome Cảnh Biển -->
+    <div id="welcomeOverlay">
+        <div class="welcome-card">
+            <h1>Hệ Thống Giảng Dạy Khai Báo Hải Quan</h1>
+            <h2>Học phần: Nghiệp vụ Hải quan & Khai báo Điện tử</h2>
+            
+            <div class="welcome-info">
+                <p>🚢 Tàu biển & Container | ✈️ Logistics Sân Bay | 🏬 Kho Bãi Hải Quan</p>
+                <p style="margin-top: 8px; font-weight: bold;">GV. Nguyễn Khánh Dương - Phát triển phần mềm</p>
+            </div>
+
+            <button class="start-btn" onclick="closeWelcome()">
+                🚀 Bắt Đầu Học Ngay
+            </button>
+        </div>
+    </div>
+
     <!-- Header Section -->
     <header>
         <div class="header-title">
@@ -215,6 +335,7 @@
 
     <!-- Dynamic Navigation Tabs -->
     <nav id="tabContainer">
+        <button class="tab-btn home-tab-btn" onclick="showWelcome()">🏠 Menu</button>
         <button class="tab-btn active" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-1/', this)">Chương 1: Tổng Quan</button>
         <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-2/', this)">Chương 2: Chứng Từ</button>
         <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-3/', this)">Chương 3: Xuất Xứ</button>
@@ -246,6 +367,15 @@
 
     <!-- Script Logic -->
     <script>
+        // Mở/Đóng màn hình Welcome
+        function closeWelcome() {
+            document.getElementById('welcomeOverlay').classList.add('hidden');
+        }
+
+        function showWelcome() {
+            document.getElementById('welcomeOverlay').classList.remove('hidden');
+        }
+
         // Chuyển tab và tải nội dung
         function loadPage(url, btnElement) {
             document.getElementById('contentFrame').src = url;
