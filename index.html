@@ -6,14 +6,14 @@
     <title>Hệ Thống Quản Lý Môn Học Khai Báo Hải Quan</title>
     <style>
         :root {
-            --bg-light-blue: #e8f4f8;
+            --bg-light-blue: #f0f4f8;
             --primary-blue: #bbe1fa;
-            --header-blue: #2b580c;
+            --header-blue: #1e3a8a;
             --light-yellow: #fff5c3;
             --accent-yellow: #f6d860;
             --bright-red: #ff3333;
             --hover-red: #cc0000;
-            --text-dark: #1a1a1a;
+            --text-dark: #1e293b;
         }
 
         * {
@@ -132,7 +132,7 @@
 
         /* Banner Header */
         header {
-            background: linear-gradient(rgba(0, 40, 85, 0.75), rgba(0, 40, 85, 0.75)), 
+            background: linear-gradient(rgba(0, 40, 85, 0.8), rgba(0, 40, 85, 0.8)), 
                         url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
@@ -239,11 +239,22 @@
             color: #023e8a;
         }
 
+        .chapters-tab-btn {
+            background-color: #0284c7;
+            color: #ffffff !important;
+        }
+
+        .chapters-tab-btn.active {
+            background-color: #0369a1;
+            border-bottom: 3px solid var(--accent-yellow);
+        }
+
         /* Main Workspace Container */
         main {
             flex: 1;
             position: relative;
-            background-color: #ffffff;
+            background-color: #f8fafc;
+            overflow: hidden;
         }
 
         iframe {
@@ -251,6 +262,116 @@
             height: 100%;
             border: none;
             display: block;
+        }
+
+        /* Tab Nội Dung Mô Phỏng Các Chương */
+        #chaptersContainer {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 25px;
+            background-color: #f1f5f9;
+        }
+
+        .chapters-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .chapters-header h2 {
+            font-size: 1.6rem;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .chapters-header p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-bottom: 30px;
+        }
+
+        .chapter-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+            border-color: #38bdf8;
+        }
+
+        .chapter-img {
+            height: 140px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .chapter-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .chapter-badge {
+            align-self: flex-start;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .chapter-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .chapter-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .chapter-btn {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+            width: 100%;
+        }
+
+        .chapter-btn:hover {
+            background-color: #0369a1;
         }
 
         /* Status Footer */
@@ -336,21 +457,143 @@
     <!-- Dynamic Navigation Tabs -->
     <nav id="tabContainer">
         <button class="tab-btn home-tab-btn" onclick="showWelcome()">🏠 Menu</button>
-        <button class="tab-btn active" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-1/', this)">Chương 1: Tổng Quan</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-2/', this)">Chương 2: Chứng Từ</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-3/', this)">Chương 3: Xuất Xứ</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-4/', this)">Chương 4: Thuế & Hải Quan</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-5/', this)">Chương 5: Thủ Tục HQ</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-6/', this)">Chương 6: HQ Điện Tử</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-7/', this)">Chương 7: TQ Nhập Khẩu</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-8/', this)">Chương 8: TQ Xuất Khẩu</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-chuong-9/', this)">Chương 9: ECUS 5</button>
-        <button class="tab-btn" onclick="loadPage('https://duongkhanhnguyen.github.io/KBHQ-DVCONG/', this)">Dịch Vụ Công HQ</button>
+        <button class="tab-btn chapters-tab-btn active" id="chaptersTabBtn" onclick="showChaptersTab(this)">📚 Các Chương Môn Học</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-1/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 1: Tổng Quan</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-2/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 2: Chứng Từ</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-3/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 3: Xuất Xứ</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-4/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 4: Thuế & Hải Quan</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-5/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 5: Thủ Tục HQ</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-6/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 6: HQ Điện Tử</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-7/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 7: TQ Nhập Khẩu</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-8/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 8: TQ Xuất Khẩu</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-chuong-9/" onclick="loadPage(this.getAttribute('data-url'), this)">Chương 9: ECUS 5</button>
+        <button class="tab-btn" data-url="https://duongkhanhnguyen.github.io/KBHQ-DVCONG/" onclick="loadPage(this.getAttribute('data-url'), this)">Dịch Vụ Công HQ</button>
     </nav>
 
     <!-- Content Workspace -->
     <main>
-        <iframe id="contentFrame" src="https://duongkhanhnguyen.github.io/KBHQ-chuong-1/" title="Nội dung bài học"></iframe>
+        <!-- Tab Mô phỏng các chương môn học -->
+        <div id="chaptersContainer">
+            <div class="chapters-header">
+                <h2>Cấu Trúc Chương Trình Học Phần</h2>
+                <p>Chọn chương học bên dưới để bắt đầu bài giảng chi tiết</p>
+            </div>
+
+            <div class="chapters-grid">
+                <!-- Chương 1 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80" alt="Chương 1" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 1</span>
+                        <h3 class="chapter-title">Tổng Quan Khai Báo Hải Quan</h3>
+                        <p class="chapter-desc">Tìm hiểu về khái niệm cơ bản, vai trò của hải quan trong thương mại quốc tế và các quy định chung.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(2)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 2 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80" alt="Chương 2" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 2</span>
+                        <h3 class="chapter-title">Chứng Từ Trong Khai Báo</h3>
+                        <p class="chapter-desc">Bộ chứng từ xuất nhập khẩu: Hóa đơn (Invoice), Vận đơn (B/L), Phiếu đóng gói (Packing List)...</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(3)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 3 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Chương 3" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 3</span>
+                        <h3 class="chapter-title">Xuất Xứ Hàng Hóa (C/O)</h3>
+                        <p class="chapter-desc">Quy tắc xuất xứ hàng hóa, các biểu mẫu Giấy chứng nhận xuất xứ C/O và tiêu chí xác định.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(4)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 4 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Chương 4" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 4</span>
+                        <h3 class="chapter-title">Thuế & Mã HS Code</h3>
+                        <p class="chapter-desc">Phân loại hàng hóa theo danh mục HS, phương pháp tính thuế xuất nhập khẩu và các trị giá hải quan.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(5)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 5 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80" alt="Chương 5" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 5</span>
+                        <h3 class="chapter-title">Thủ Tục Hải Quan</h3>
+                        <p class="chapter-desc">Quy trình làm thủ tục hải quan, kiểm tra thực tế hàng hóa, phân luồng tờ khai (Xanh, Vàng, Đỏ).</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(6)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 6 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Chương 6" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 6</span>
+                        <h3 class="chapter-title">Hải Quan Điện Tử</h3>
+                        <p class="chapter-desc">Tổng quan về hệ thống VNACCS/VCIS, chữ ký số và nguyên lý truyền nhận dữ liệu thông quan.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(7)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 7 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=600&q=80" alt="Chương 7" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 7</span>
+                        <h3 class="chapter-title">Tờ Khai Nhập Khẩu</h3>
+                        <p class="chapter-desc">Hướng dẫn chi tiết các tiêu chí thông tin và thao tác nhập tờ khai hải quan hàng hóa nhập khẩu.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(8)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 8 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80" alt="Chương 8" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 8</span>
+                        <h3 class="chapter-title">Tờ Khai Xuất Khẩu</h3>
+                        <p class="chapter-desc">Thực hành lập và truyền tờ khai xuất khẩu, các lưu ý về loại hình xuất khẩu thương mại.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(9)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Chương 9 -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Chương 9" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chương 9</span>
+                        <h3 class="chapter-title">Phần Mềm ECUS 5</h3>
+                        <p class="chapter-desc">Hướng dẫn thực hành thao tác trực tiếp trên phần mềm khai báo hải quan ECUS5-VNACCS.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(10)">Vào Bài Học →</button>
+                    </div>
+                </div>
+
+                <!-- Dịch vụ công -->
+                <div class="chapter-card">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Dịch Vụ Công" class="chapter-img">
+                    <div class="chapter-body">
+                        <span class="chapter-badge">Chuyên Đề</span>
+                        <h3 class="chapter-title">Dịch Vụ Công Hải Quan</h3>
+                        <p class="chapter-desc">Sử dụng Cổng thông tin một cửa quốc gia và các dịch vụ công trực tuyến ngành Hải quan.</p>
+                        <button class="chapter-btn" onclick="openChapterByIndex(11)">Vào Bài Học →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khung Frame tải link bài học -->
+        <iframe id="contentFrame" src="" title="Nội dung bài học" style="display: none;"></iframe>
     </main>
 
     <!-- Footer -->
@@ -361,7 +604,7 @@
             Phần mềm dùng cho giảng dạy và học tập.
         </div>
         <div class="status" id="activeTabName">
-            Đang xem: Chương 1 - Tổng quan Khai báo hải quan
+            Đang xem: Danh mục các chương môn học
         </div>
     </footer>
 
@@ -376,15 +619,45 @@
             document.getElementById('welcomeOverlay').classList.remove('hidden');
         }
 
-        // Chuyển tab và tải nội dung
-        function loadPage(url, btnElement) {
-            document.getElementById('contentFrame').src = url;
-            
+        // Chuyển sang Tab "Các Chương Môn Học"
+        function showChaptersTab(btnElement) {
+            document.getElementById('contentFrame').style.display = 'none';
+            document.getElementById('chaptersContainer').style.display = 'block';
+
             let tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach(tab => tab.classList.remove('active'));
-            
-            btnElement.classList.add('active');
-            document.getElementById('activeTabName').textContent = 'Đang xem: ' + btnElement.textContent;
+
+            if (btnElement) {
+                btnElement.classList.add('active');
+            } else {
+                document.getElementById('chaptersTabBtn').classList.add('active');
+            }
+
+            document.getElementById('activeTabName').textContent = 'Đang xem: Danh mục các chương môn học';
+        }
+
+        // Chuyển tab và tải nội dung link iframe
+        function loadPage(url, btnElement) {
+            document.getElementById('chaptersContainer').style.display = 'none';
+            let iframe = document.getElementById('contentFrame');
+            iframe.style.display = 'block';
+            iframe.src = url;
+
+            let tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            if (btnElement) {
+                btnElement.classList.add('active');
+                document.getElementById('activeTabName').textContent = 'Đang xem: ' + btnElement.textContent;
+            }
+        }
+
+        // Mở bài học dựa theo chỉ mục của tab (dành cho nút "Vào Bài Học" ở các card)
+        function openChapterByIndex(index) {
+            let tabs = document.querySelectorAll('.tab-btn');
+            if (tabs[index]) {
+                tabs[index].click();
+            }
         }
 
         // Bật / Tắt Toàn màn hình (Full Screen)
